@@ -11,7 +11,10 @@ import { formatNumber } from '@/helper/numberHelper'
 const columnDefs = ref([
   { headerName: 'Name', field: 'name' },
   { headerName: 'Balance', field: 'balance', valueFormatter: (params : any) => formatNumber(params.value) },
-  { headerName: 'Email', field: 'email' },
+  { headerName: 'Email', field: 'email', cellRenderer: (params: any) => {
+      const emailLink = `mailto:${params.value}`;
+      return `<a href="${emailLink}" target="_blank">${params.value}</a>`;
+    }},
   { headerName: 'Registration', field: 'registerAt', valueFormatter: (params: any) => new Date(params.value).toLocaleDateString() },
   { headerName: 'Status', field: 'active', cellRenderer: (params: any) => (params.value ? 'Active' : 'Inactive') },
  {headerName: 'Action' , cellRenderer: (params : any) => { return 'Action Button'}}
@@ -133,6 +136,5 @@ const defaultColDef = reactive({
 .container{
     height : 100vh;
     width: 100vw;
-    backgroundColor: 'red'
 }
 </style>
