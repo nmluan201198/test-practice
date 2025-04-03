@@ -12,8 +12,8 @@ import type { GridOptions } from 'ag-grid-community'
 
 // Column Definitions
 const columnDefs = ref([
-  { headerName: 'Name', field: 'name' },
-  { headerName: 'Balance', field: 'balance', valueFormatter: (params : any) => formatNumber(params.value) },
+  { headerName: 'Name', field: 'name' , sortable: true},
+  { headerName: 'Balance ($)', field: 'balance', valueFormatter: (params : any) => formatNumber(params.value) },
   { headerName: 'Email', field: 'email', cellRenderer: (params: any) => {
       const emailLink = `mailto:${params.value}`;
       return `<a href="${emailLink}" target="_blank">${params.value}</a>`;
@@ -114,7 +114,8 @@ const gridOptions: GridOptions = {
 
 const defaultColDef = reactive({
   resizable: true,
-  editable: true
+  editable: true,
+  sortable: true
 })
 
 </script>
