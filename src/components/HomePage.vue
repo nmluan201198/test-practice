@@ -6,6 +6,9 @@ import { AgGridVue } from 'ag-grid-vue3'
 import type { TUser } from '@/interfaces/UserInterface'
 import { reactive } from 'vue'
 import { formatNumber } from '@/helper/numberHelper'
+import dayjs from 'dayjs'
+import RegistrationRenderer from './RegistrationRenderer.vue'
+import type { GridOptions } from 'ag-grid-community'
 
 // Column Definitions
 const columnDefs = ref([
@@ -15,7 +18,7 @@ const columnDefs = ref([
       const emailLink = `mailto:${params.value}`;
       return `<a href="${emailLink}" target="_blank">${params.value}</a>`;
     }},
-  { headerName: 'Registration', field: 'registerAt', valueFormatter: (params: any) => new Date(params.value).toLocaleDateString() },
+  { headerName: 'Registration', field: 'registerAt',cellRenderer: RegistrationRenderer},
   { headerName: 'Status', field: 'active', cellRenderer: (params: any) => (params.value ? 'Active' : 'Inactive') },
  {headerName: 'Action' , cellRenderer: (params : any) => { return 'Action Button'}}
 ]);
@@ -105,9 +108,10 @@ const rowData = ref<TUser[]>([
 ]);
 
 // Grid Options
-const gridOptions = ref({
- 
-});
+const gridOptions: GridOptions = {
+  pagination: true,
+}
+
 const defaultColDef = reactive({
   resizable: true,
   editable: true
