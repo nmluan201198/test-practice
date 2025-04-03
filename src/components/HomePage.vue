@@ -115,7 +115,8 @@ const gridOptions: GridOptions = {
 const defaultColDef = reactive({
   resizable: true,
   editable: true,
-  sortable: true
+  sortable: true,
+  filter: true
 })
 
 </script>
