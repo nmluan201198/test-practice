@@ -55,7 +55,6 @@ const columnDefs = ref([
 // Row Data
 const rowData = ref<TUser[]>([])
 const gridApi = shallowRef<GridApi<TUser> | null>(null)
-
 const rowSelection = ref<'single' | 'multiple'>('multiple')
 const paginationPageSize = ref(10)
 const paginationPageSizeSelector = ref<number[] | boolean>([10, 50, 100])
@@ -64,6 +63,45 @@ const paginationNumberFormatter = ref<(params: PaginationNumberFormatterParams) 
     return '[' + params.value.toLocaleString() + ']'
   },
 )
+
+function processWithDelay(numbers: any[]): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    // Check if the input is an array
+    if (!Array.isArray(numbers)) {
+      reject(new Error('Input must be an array'));
+      return;
+    }
+
+    // Check if all items in the array are numbers
+    if (numbers.some((num) => typeof num !== 'number')) {
+      reject(new Error('Array must only contain numeric values'));
+      return;
+    }
+
+    // Define the async function to process each number with delay
+    const process = async () => {
+      if (numbers.length === 0) {
+        // Resolve immediately if the array is empty
+        resolve();
+        return;
+      }
+
+      for (let i = 0; i < numbers.length; i++) {
+        // Wait for 1 second between each number processing
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Print the number to the console when it is processed
+        console.log(numbers[i]);
+      }
+
+      // Resolve the promise after all numbers have been processed
+      resolve();
+    };
+
+    // Start processing the numbers
+    process().catch(reject);
+  });
+}
 
 // Grid Options
 const gridOptions: GridOptions = {
@@ -97,11 +135,16 @@ const onGridReady = (params: GridReadyEvent) => {
       message.error("Network Error")
     })
 }
+
+onMounted(() => {
+  processWithDelay([1,2,3,4,5]).then(() => {console.log("All Number Processed")}).catch((error) => {console.log("Error");
+  })
+})
 </script>
 
 <template>
   <div class="container">
-    <p>Test Practice 2</p>
+    <p>App Development Test</p>
 
     <div :style="{ width: '100%', height: '100%' }" class="ag-theme-alpine grid-container">
       <ag-grid-vue
