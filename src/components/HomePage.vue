@@ -105,7 +105,6 @@ function processWithDelay(numbers: any[]): Promise<void> {
 
 // Grid Options
 const gridOptions: GridOptions = {
-  pagination: true,
 }
 
 const defaultColDef = reactive({
@@ -146,7 +145,7 @@ onMounted(() => {
   <div class="container">
     <p>App Development Test</p>
 
-    <div :style="{ width: '100%', height: '100%' }" class="ag-theme-alpine grid-container">
+    <div :style="{ width: '100%', height: '60%' }" class="ag-theme-alpine grid-container">
       <ag-grid-vue
         :style="{ width: '100%', height: '100%' }"
         @grid-ready="onGridReady"
@@ -155,11 +154,8 @@ onMounted(() => {
         :pagination="true"
         :paginationPageSize="paginationPageSize"
         :paginationPageSizeSelector="paginationPageSizeSelector"
-        :paginationNumberFormatter="paginationNumberFormatter"
         :rowData="rowData"
-        :grid-options="gridOptions"
         :default-col-def="defaultColDef"
-        class="ag-theme-alpine"
       >
       </ag-grid-vue>
     </div>
@@ -170,5 +166,6 @@ onMounted(() => {
 .container {
   height: 100vh;
   width: 100vw;
+  padding: 16px;
 }
 </style>
